@@ -29,6 +29,12 @@ const createRouter = function (collection) {
   });
 });
 
+  router.post('/', (req, res) => {
+    const newToDo = req.body;
+    collection.insertOne(newToDo)
+    .then(result => res.json(result.ops[0]))
+  })
+
   return router;
 
 }
