@@ -12,7 +12,6 @@ MongoClient.connect('mongodb://localhost:27017')
   const todoCollection = db.collection('todo');
   const todoRouter = createRouter(todoCollection)
   app.use('/api/todo', todoRouter);
-
 })
 
 app.use(parser.json());
