@@ -26,17 +26,35 @@ const createRouter = function (collection) {
     console.error(err);
     res.status(500);
     res.json({ status: 500, error: error });
+      });
   });
-});
 
   router.post('/', (req, res) => {
     const newToDo = req.body;
     collection.insertOne(newToDo)
     .then(result => res.json(result.ops[0]))
-  })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.json({ status: 500, error: error });
+        });
+  });
+
+  router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    collection
+    .deleteOne({ _id: ObjectID(id) })
+    .then(result => { res.json(result)
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500);
+      res.json({ status: 500, error: err})
+    });
+  });
 
   return router;
-
-}
+  
+};
 
 module.exports = createRouter;
